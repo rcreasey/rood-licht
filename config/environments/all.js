@@ -1,5 +1,6 @@
 var express = require('express')
   , poweredBy = require('connect-powered-by')
+  , lessMiddleware = require('less-middleware')
   , util = require('util');
 
 module.exports = function() {
@@ -11,11 +12,14 @@ module.exports = function() {
 
   // Configure application settings.  Consult the Express API Reference for a
   // list of the available [settings](http://expressjs.com/api.html#app-settings).
-  this.set('views', __dirname + '/../../app/views');
-  this.set('view engine', 'ejs');
+  var root = require('path').normalize(__dirname + '/../..');
+  this.set('views', root + '/app/views');
+  this.set('view engine', 'jade');
 
   // Register EJS as a template engine.
-  this.engine('ejs', require('ejs').__express);
+  this.engine('jade', require('jade').__express);
+  this.use(require('less-middleware')({ src: root + '/public', compress: true }));
+  this.use(express.static(root + '/public'));
 
   // Override default template extension.  By default, Locomotive finds
   // templates using the `name.format.engine` convention, for example
@@ -23,7 +27,7 @@ module.exports = function() {
   // layouts using a `layout.engine` notation, this results in mixed conventions
   // that can cuase confusion.  If this occurs, you can map an explicit
   // extension to a format.
-  /* this.format('html', { extension: '.jade' }) */
+  this.format('html', { extension: '.jade' });
 
   // Register formats for content negotiation.  Using content negotiation,
   // different formats can be served as needed by different clients.  For
@@ -37,7 +41,6 @@ module.exports = function() {
   this.use(poweredBy('Locomotive'));
   this.use(express.logger());
   this.use(express.favicon());
-  this.use(express.static(__dirname + '/../../public'));
   this.use(express.bodyParser());
   this.use(express.methodOverride());
   this.use(this.router);
