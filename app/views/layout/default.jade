@@ -5,9 +5,10 @@ html
     title Rood Licht Handel BV :: #{title}
     include head
   body
-    #wrap
-      include navigation
+    include navigation
 
+    #content.container
       block content
 
     include footer
+    include scripts
