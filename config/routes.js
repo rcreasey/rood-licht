@@ -6,5 +6,6 @@
 // Guide on [routing](http://locomotivejs.org/guide/routing.html) for additional
 // information.
 module.exports = function routes() {
+  this.match('contracts', { controller: 'contracts', action: 'index' });
   this.root('root#index');
 }
