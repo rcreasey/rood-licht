@@ -13,6 +13,11 @@
     "locomotive": "0.3.x",
     "express": "3.x.x",
     "connect-powered-by": "0.1.x",
+    "locomotive-mongoose": "0.1.x",
+    "accounting": "0.3.x",
+    "moment": "2.1.x",
+    "mongoose": "3.6.x",
+    "mongoose-types": "1.0.x",
     "jade": "0.30.x",
     "less-middleware": "0.1.x",
     "hamster": "git://github.com/kuja/hamster.git"

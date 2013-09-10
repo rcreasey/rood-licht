@@ -1,7 +1,8 @@
 var express = require('express')
   , poweredBy = require('connect-powered-by')
   , lessMiddleware = require('less-middleware')
-  , util = require('util');
+  , util = require('util')
+  , moment = require('moment')
 
 module.exports = function() {
   // Warn of version mismatch between global "lcm" binary and local installation
@@ -16,10 +17,19 @@ module.exports = function() {
   this.set('views', root + '/app/views');
   this.set('view engine', 'jade');
 
-  // Register EJS as a template engine.
+  // Register the datastore
+  this.datastore(require('locomotive-mongoose'));
+
+  // Register the template engine
   this.engine('jade', require('jade').__express);
   this.use(require('less-middleware')({ src: root + '/public', compress: true }));
   this.use(express.static(root + '/public'));
+
+  // Register Globals
+  this.locals({
+    moment: require('moment'),
+    accounting: require('accounting')
+  });
 
   // Override default template extension.  By default, Locomotive finds
   // templates using the `name.format.engine` convention, for example

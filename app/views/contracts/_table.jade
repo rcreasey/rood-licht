@@ -1,0 +1,28 @@
+table.table.table-condensed.table-hover
+  thead
+    tr
+      th ID
+      th Issuer
+      th Status
+
+      th Pickup
+      th Destination
+      th Volume
+      th Reward
+
+      th Issued
+
+  tbody
+    each contract in contracts
+      tr(class= contract.status.toLowerCase())
+        td= contract.contractID
+        td= contract.issuerID
+        td= contract.status.replace("InProgress", "In Progress")
+        td= contract.startStation()
+        td= contract.endStation()
+        td
+          = contract.volume
+          |  m
+          sup 3
+        td= accounting.formatNumber(contract.reward)
+        td= moment(String(contract.dateIssued)).format("YYYY-MM-DD HH:mm:ss")

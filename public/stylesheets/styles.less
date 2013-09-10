@@ -16,3 +16,25 @@ body {
   .dl-horizontal dt { width: 230px; }
   .dl-horizontal dd { margin-left: 250px; }
 }
+
+.table > tbody > tr.completed > td,
+.table > tbody > tr.rejected > td,
+.table > tbody > tr.deleted > td {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.table > tbody > tr.failed > td {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+
+.table > tbody > tr.outstanding > td {
+  background-color: #5bc0de;
+  border-color: #52adc8;
+}
+
+.table > tbody > tr.inprogress > td {
+  background-color: #fcf8e3;
+  border-color: #fbeed5;
+}

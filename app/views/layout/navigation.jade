@@ -8,33 +8,31 @@
       a.navbar-brand(href='#') Rood Licht Handel BV
     .navbar-collapse.collapse
       ul.nav.navbar-nav
-        li.active
-          a(href='#') Pricing
-        li.dropdown
+        li(class=title.match(/^Pricing$/g)?'active':undefined)
+          a(href='/') Pricing
+        li.dropdown(class=title.match(/^Contracts/g)?'active':undefined)
           a.dropdown-toggle(href='#', data-toggle='dropdown') Contracts
             b.caret
           ul.dropdown-menu
-            li
-              a(href='#') Outstanding
-            li
-              a(href='#') In Progress
-            li
-              a(href='#') Completed
-        li.dropdown
-          a.dropdown-toggle(href='#', data-toggle='dropdown') Statistics
+            li(class=title.match(/^Contracts$/g)?'active':undefined)
+              a(href='/contracts') Current
+            li(class=title.match(/^Contracts - Completed$/g)?'active':undefined)
+              a(href='/contracts/completed') Completed
+        li.dropdown(class=title.match(/^Statistics/g)?'active':undefined)
+          a.dropdown-toggle(href='/statistics', data-toggle='dropdown') Statistics
             b.caret
           ul.dropdown-menu
-            li 
+            li(class=title.match(/^Statistics - Historical$/g)?'active':undefined)
               p.navbar-text Historical
-            li
-              a(href='#') By Volume
-            li
-              a(href='#') By Rewards
+            li(class=title.match(/^Statistics - By Volume$/g)?'active':undefined)
+              a(href='/statistics/volume') By Volume
+            li(class=title.match(/^Statistics - By Rewards$/g)?'active':undefined)
+              a(href='/statistics/rewards') By Rewards
             li 
               p.navbar-text Contract
-            li
-              a(href='#') Completed 
-            li
-              a(href='#') Failed 
-            li
-              a(href='#') Rejected 
+            li(class=title.match(/^Statistics - Contracts Completed$/g)?'active':undefined)
+              a(href='/statistics/completed') Completed 
+            li(class=title.match(/^Statistics - Contracts Failed$/g)?'active':undefined)
+              a(href='/statistics/failed') Failed 
+            li(class=title.match(/^Statistics - Contracts Rejected$/g)?'active':undefined)
+              a(href='/statistics/rejected') Rejected 
