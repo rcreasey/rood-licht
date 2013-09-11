@@ -27,12 +27,3 @@ table#contracts.table.table-condensed.table-hover.dataTable
           sup 3
         td= accounting.formatNumber(contract.reward)
         td= moment(String(contract.dateIssued)).format("YYYY-MM-DD HH:mm:ss")
-
-:coffeescript
-  $(document).ready ->
- 
-    
-    oTable = $("#contracts").dataTable(
-      aoColumns: [null, null, null, null, null, null, null, {sType: "formatted-num"}]
-    )
-    oTable.fnSort [[1, "desc"]]
