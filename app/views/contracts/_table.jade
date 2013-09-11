@@ -15,7 +15,8 @@ table#contracts.table.table-condensed.table-hover.dataTable
   tbody
     each contract in contracts
       tr(class= contract.status.toLowerCase())
-        td= contract.contractID
+        td
+          button.btn.btn-xs.btn-info(type="button", onclick="CCPEVE.showContract(###, #{contract.contractID})")= contract.contractID
         td= contract.issuerName
         td= contract.status.replace("InProgress", "In Progress")
         td= contract.startStation()
@@ -26,7 +27,12 @@ table#contracts.table.table-condensed.table-hover.dataTable
           sup 3
         td= accounting.formatNumber(contract.reward)
         td= moment(String(contract.dateIssued)).format("YYYY-MM-DD HH:mm:ss")
-      tr(style='display: none;')
-        td(colspan=8)
-          code
-            pre= contract
+
+:coffeescript
+  $(document).ready ->
+ 
+    
+    oTable = $("#contracts").dataTable(
+      aoColumns: [null, null, null, null, null, null, null, {sType: "formatted-num"}]
+    )
+    oTable.fnSort [[1, "desc"]]
