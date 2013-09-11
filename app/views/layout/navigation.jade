@@ -2,9 +2,9 @@
   .container
     .navbar-header
       button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
-      span.icon-bar
-      span.icon-bar
-      span.icon-bar
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
       a.navbar-brand(href='#') Rood Licht Handel BV
     .navbar-collapse.collapse
       ul.nav.navbar-nav
@@ -15,7 +15,7 @@
             b.caret
           ul.dropdown-menu
             li(class=title.match(/^Contracts$/g)?'active':undefined)
-              a(href='/contracts') Current
+              a(href='/contracts/current') Current
             li(class=title.match(/^Contracts - Completed$/g)?'active':undefined)
               a(href='/contracts/completed') Completed
         li.dropdown(class=title.match(/^Statistics/g)?'active':undefined)

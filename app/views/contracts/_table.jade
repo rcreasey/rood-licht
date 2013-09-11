@@ -1,4 +1,4 @@
-table.table.table-condensed.table-hover
+table#contracts.table.table-condensed.table-hover.dataTable
   thead
     tr
       th ID
@@ -16,13 +16,17 @@ table.table.table-condensed.table-hover
     each contract in contracts
       tr(class= contract.status.toLowerCase())
         td= contract.contractID
-        td= contract.issuerID
+        td= contract.issuerName
         td= contract.status.replace("InProgress", "In Progress")
         td= contract.startStation()
         td= contract.endStation()
         td
-          = contract.volume
+          = accounting.toFixed(contract.volume, 2)
           |  m
           sup 3
         td= accounting.formatNumber(contract.reward)
         td= moment(String(contract.dateIssued)).format("YYYY-MM-DD HH:mm:ss")
+      tr(style='display: none;')
+        td(colspan=8)
+          code
+            pre= contract

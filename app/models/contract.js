@@ -2,13 +2,18 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema;
 
 var Contract = Schema({
-  contractID: Number,
+  contractID: {type: Number, index: true, unique: true},
   issuerID: Number,
-  issuerName: String,
+  issuerCorpID: Number,
+  issuerName: {type: String, default: null},
   startStationID: Number,
+  startStationName: {type: String, default: null},
   endStationID: Number,
+  endStationName: {type: String, default: null},
   type: String,
   status: String,
+  title: String,
+  forCorp: Boolean,
   dateIssued: Date,
   dateExpired: Date,
   dateAccepted: Date,
@@ -32,6 +37,8 @@ var station_id_to_name = function(stationID) {
       return '1DH-SX III';
     case 61000854:
       return '4-EP12 VIII';
+    case 60012334:
+      return 'Jan VI - Moon 21';
     case 60014917:
       return 'VFK-IV VI';
     case 61000358:

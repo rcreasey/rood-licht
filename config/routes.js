@@ -7,6 +7,7 @@
 // information.
 module.exports = function routes() {
   this.match('contracts', { controller: 'contracts', action: 'index' });
+  this.match('contracts/current', { controller: 'contracts', action: 'current' });
   this.match('contracts/completed', { controller: 'contracts', action: 'completed' });
   this.root('root#index');
-}
+};
