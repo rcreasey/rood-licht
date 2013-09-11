@@ -16,7 +16,7 @@ table#contracts.table.table-condensed.table-hover.dataTable
     each contract in contracts
       tr(class= contract.status.toLowerCase())
         td
-          button.btn.btn-xs.btn-info(type="button", onclick="CCPEVE.showContract(###, #{contract.contractID})")= contract.contractID
+          button.btn.btn-xs.btn-primary(type="button", onclick="CCPEVE.showContract(###, #{contract.contractID})")= contract.contractID
         td= contract.issuerName
         td= contract.status.replace("InProgress", "In Progress")
         td= contract.startStation()

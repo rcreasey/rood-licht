@@ -117,11 +117,9 @@ $(document).ready(function() {
   var oTable;
   oTable = $("#contracts").dataTable({
     aoColumns: [
-      null, null, null, null, null, null, null, {
-        sType: "formatted-num"
-      }
+      null, null, null, null, null, {sType: "formatted-num"}, {sType: "formatted-num"}, {sType: "formatted-num"}
     ]
   });
-  return oTable.fnSort([[1, "desc"]]);
+  return oTable.fnSort([[0, "desc"]]);
 });
 
