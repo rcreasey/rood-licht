@@ -18,7 +18,7 @@ eveapi.setParams({keyID: process.env.EVE_KEYID, vCode: process.env.EVE_VCODE });
 eveapi.fetch('corp:Contracts', {}, function (err, result) {
   if (err) throw err;
 
-  console.log('--> Fetching Contracts');
+  console.log('-----> Fetching Contracts');
   for (contractID in result.contractList) {
     contract = result.contractList[ contractID ];
     if(contract.type == 'Courier') {
@@ -30,7 +30,7 @@ eveapi.fetch('corp:Contracts', {}, function (err, result) {
   }
 
   console.log('');
-  console.log('%s Contracts Updated', count);
+  console.log('       %s Contracts Updated', count);
   mongoose.disconnect();
 });
 

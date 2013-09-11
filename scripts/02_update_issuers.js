@@ -16,7 +16,7 @@ var count = 0;
 eveapi.setParams({keyID: process.env.EVE_KEYID, vCode: process.env.EVE_VCODE });
 
 // update contracts with no issuer set
-console.log('--> Updating Issuers');
+console.log('-----> Updating Issuers');
 async.waterfall([
   function(cb) {
     Contract.find({issuerName: null}, {"_id": 1, "issuerID": 1, "issuerName": 1}, cb);
@@ -48,6 +48,6 @@ async.waterfall([
   }
 ], function() {
   console.log('')
-  console.log('%s Issuers Updated', count);
+  console.log('       %s Issuers Updated', count);
   mongoose.disconnect();
 });
