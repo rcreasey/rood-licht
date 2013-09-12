@@ -18,8 +18,24 @@ var static_station_lookup = function (stationID) {
   switch(stationID) {
     case 60003760:
       return 'Jita 4-4 - CNAP';
+    case 61000299:
+      return 'MZ1E-P IX';
+    case 61000005:
+      return 'JU-OWQ VII';
     case 60014945:
       return '1DH-SX III';
+    case 61000854:
+      return '4-EP12 VIII';
+    case 60012334:
+      return 'Jan VI - Moon 21';
+    case 60014917:
+      return 'VFK-IV VI';
+    case 61000358:
+      return '85-B52 IV';
+    case 61000827:
+      return 'E-FIC0 I';
+    case 61000166:
+      return 'S-DN5M IX';
     default:
       return stationID;
   }
