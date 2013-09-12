@@ -22,6 +22,7 @@ table#contracts.table.table-condensed.table-hover.dataTable
         td
           if contract.forCorp
             = contract.issuerCorpName
+            span.badge.pull-right Corp
           else
             = contract.issuerName
         td= contract.status.replace("InProgress", "In Progress")
