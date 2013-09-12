@@ -1,3 +1,5 @@
+p All contracts are up to date within a 10 minute window.
+
 table#contracts.table.table-condensed.table-hover.dataTable
   thead
     tr
@@ -17,7 +19,11 @@ table#contracts.table.table-condensed.table-hover.dataTable
       tr(class= contract.status.toLowerCase())
         td
           button.btn.btn-xs.btn-primary(type="button", onclick="CCPEVE.showContract(###, #{contract.contractID})")= contract.contractID
-        td= contract.issuerName
+        td
+          if contract.forCorp
+            = contract.issuerCorpName
+          else
+            = contract.issuerName
         td= contract.status.replace("InProgress", "In Progress")
         td= contract.startStation()
         td= contract.endStation()

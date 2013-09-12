@@ -19,23 +19,22 @@ eveapi.setParams({keyID: process.env.EVE_KEYID, vCode: process.env.EVE_VCODE });
 console.log('-----> Updating Issuers');
 async.waterfall([
   function(cb) {
-    Contract.find({issuerName: null}, {"_id": 1, "issuerID": 1, "issuerName": 1}, cb);
+    Contract.find({$or: [{issuerName: null}, {issuerCorpName: null}]}, {"_id": 1, "issuerID": 1, "issuerName": 1, "issuerCorpID": 1, "issuerCorpName": 1, "forCorp": 1}, cb);
   },
   function(contracts, cb) {
     async.forEach(contracts, function(contract, callback) {
 
       async.waterfall([
         function(eve_callback) {
-          eveapi.fetch('eve:CharacterName', {ids: contract.issuerID}, eve_callback);
+          eveapi.fetch('eve:CharacterName', {ids: contract.issuerID + ',' + contract.issuerCorpID}, eve_callback);
         },
         function(result, update_callback) {
-          if (result.characters[contract.issuerID] !== undefined) {
-            character_name = result.characters[contract.issuerID].name;
-            Contract.update({_id: contract._id}, {$set: {issuerName: character_name}}, update_callback);
+          corp_name = result.characters[contract.issuerCorpID].name;
+          char_name = result.characters[contract.issuerID].name;
+          Contract.update({_id: contract._id}, {$set: {issuerName: char_name, issuerCorpName: corp_name}}, update_callback);
 
-            count += 1
-            process.stdout.write('.');
-          }
+          count += 1
+          process.stdout.write('.');
         }
       ], function() {
         callback();

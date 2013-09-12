@@ -4,8 +4,9 @@ var mongoose = require('mongoose')
 var Contract = Schema({
   contractID: {type: Number, index: true, unique: true},
   issuerID: Number,
-  issuerCorpID: Number,
   issuerName: {type: String, default: null},
+  issuerCorpID: Number,
+  issuerCorpName: {type: String, default: null},
   startStationID: Number,
   startStationName: {type: String, default: null},
   endStationID: Number,
