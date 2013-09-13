@@ -3,7 +3,7 @@ var mongoose = require('mongoose')
   , bcrypt = require('bcrypt');
 
 var UserSchema = new Schema({
-    username: { type: String, unique: true }
+    username: { type: String, required: true, unique: true }
   , salt: { type: String, required: true }
   , hash: { type: String, required: true }
   , isAdmin: { type: Boolean, default: false }
