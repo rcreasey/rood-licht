@@ -4,6 +4,7 @@ var locomotive = require('locomotive')
 
 RootController.index = function() {
   this.title = 'Pricing';
+  this.user = this.req.user;
   this.render();
 };
 

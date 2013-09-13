@@ -3,7 +3,7 @@ var locomotive = require('locomotive')
   , ContractsController = new Controller()
   , Contract = require('../models/contract')
 
-ContractsController.index = function() {
+ContractsController.index = function() {  
   var self = this;
   this.title = 'Contracts';
 

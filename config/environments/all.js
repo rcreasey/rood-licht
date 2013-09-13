@@ -58,7 +58,8 @@ module.exports = function() {
   this.use(express.bodyParser());
   this.use(express.methodOverride());
 
-  this.use(express.session({ secret: 'r00d l1cht', store: new mongo_store(process.env.MONGO_URL) }));
+  // this.use(express.session({ secret: 'r00d l1cht', store: new mongo_store(process.env.MONGO_URL) }));
+  this.use(express.session({ secret: 'r00d l1cht' }));
   this.use(passport.initialize());
   this.use(passport.session());
   this.use(flash());

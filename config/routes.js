@@ -2,17 +2,17 @@ var passport = require('passport')
   , login = require('connect-ensure-login')
 
 module.exports = function routes() {
-  this.root('root#index');
 
-  this.match('contracts', login.ensureLoggedIn('/login'), { controller: 'contracts', action: 'index' });
-  this.match('statistics', login.ensureLoggedIn('/login'), { controller: 'statistics', action: 'index' });
+  this.get('contracts', login.ensureLoggedIn('/login'), { controller: 'contracts', action: 'index' });
+  this.get('statistics', login.ensureLoggedIn('/login'), { controller: 'statistics', action: 'index' });
 
-  this.match('login', passport.authenticate('local', { successReturnToOrRedirect: '/',
+  this.get('login', 'users#login')
+  this.post('login', passport.authenticate('local', { successReturnToOrRedirect: '/',
                                                       failureRedirect: '/login',
-                                                      failureFlash: true }), {via: 'post'});
-  this.match('login', { controller: 'users', action: 'login' });
-  this.match('register', login.ensureLoggedOut('/'), { controller: 'users', action: 'new' });
-  this.match('register', login.ensureLoggedOut('/'), { controller: 'users', action: 'create' });
-  this.match('logout', { controller: 'users', action: 'logout' });
+                                                      failureFlash: true }));
+  this.get('register', 'users#new');
+  this.post('register', 'users#create');
+  this.get('logout', 'users#logout');
 
+  this.root('root#index');
 };
