@@ -1,5 +1,9 @@
 {
   "name": "rood-licht-handel-bv",
+  "repository": {
+    "type": "git",
+    "url": "  https://github.com/rcreasey/root-licht.git"
+  },
   "version": "0.0.1",
   "private": true,
   "engines": {
@@ -10,19 +14,24 @@
     "start": "lcm server"
   },
   "dependencies": {
-    "locomotive": "0.3.x",
-    "express": "3.x.x",
+    "accounting": "0.3.x",
+    "async": "0.2.x",
+    "connect-ensure-login": "0.1.x",
+    "connect-mongoose-session": "0.4.x",
     "coffee-script": "1.6.x",
     "connect-powered-by": "0.1.x",
+    "express": "3.x.x",
+    "hamster": "git://github.com/kuja/hamster.git",
+    "jade": "0.30.x",
+    "less-middleware": "0.1.x",
+    "locomotive": "0.3.x",
     "locomotive-mongoose": "0.1.x",
-    "async": "0.2.x",
-    "accounting": "0.3.x",
     "moment": "2.1.x",
     "mongoose": "3.6.x",
     "mongoose-types": "1.0.x",
-    "jade": "0.30.x",
-    "less-middleware": "0.1.x",
-    "hamster": "git://github.com/kuja/hamster.git",
-    "node-rest-client": "0.7.x"
+    "node-rest-client": "0.7.x",
+    "passport": "0.1.x",
+    "passport-local": "0.1.x"
+
   }
 }

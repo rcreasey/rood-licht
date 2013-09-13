@@ -5,10 +5,12 @@
 // `function(req, res, next)` is also fully supported.  Consult the Locomotive
 // Guide on [routing](http://locomotivejs.org/guide/routing.html) for additional
 // information.
+
 module.exports = function routes() {
+  this.root('root#index');
+
   this.match('contracts', { controller: 'contracts', action: 'index' });
   this.match('contracts/current', { controller: 'contracts', action: 'current' });
   this.match('contracts/completed', { controller: 'contracts', action: 'completed' });
   this.match('statistics', { controller: 'statistics', action: 'index' });
-  this.root('root#index');
 };

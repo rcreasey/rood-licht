@@ -1,6 +1,8 @@
 var express = require('express')
+  , mongoose = require('mongoose')
+  , mongoose_store = require('connect-mongoose-session')
+  , passport = require('passport')
   , poweredBy = require('connect-powered-by')
-  , lessMiddleware = require('less-middleware')
   , util = require('util')
   , moment = require('moment')
 
@@ -51,7 +53,23 @@ module.exports = function() {
   this.use(poweredBy('Locomotive'));
   this.use(express.logger());
   this.use(express.favicon());
+  this.use(express.cookieParser());
   this.use(express.bodyParser());
   this.use(express.methodOverride());
+
+  this.use(express.session({ secret: 'r00d l1cht', store: new mongoose_store([process.env.MONGO_URL]) }));
+
+  // new MongooseStore(
+  //           ['mongodb://localhost:27017/devulopment'], // single or mongos
+  //           //['mongodb://localhost:27017/devulopment', 'mongodb://localhost:27018/devulopment'], // replica set
+  //           {lifecheck: 30*1000}, // 30 sec
+  //           function(err){
+  //               return;
+  //           }),
+  // this.use(passport.initialize());
+  // this.use(passport.session());
+
   this.use(this.router);
 }
+
+
