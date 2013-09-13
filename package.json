@@ -16,8 +16,10 @@
   "dependencies": {
     "accounting": "0.3.x",
     "async": "0.2.x",
+    "bcrypt": "0.7.x",
     "connect-ensure-login": "0.1.x",
-    "connect-mongoose-session": "0.4.x",
+    "connect-flash": "0.1.x",
+    "connect-mongostore": "0.0.9",
     "coffee-script": "1.6.x",
     "connect-powered-by": "0.1.x",
     "express": "3.x.x",
