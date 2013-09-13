@@ -1,9 +1,7 @@
 var locomotive = require('locomotive')
-  , Controller = locomotive.Controller;
-
-var Contract = require('../models/contract');
-
-var StatisticsController = new Controller();
+  , Controller = locomotive.Controller
+  , StatisticsController = new Controller()
+  , Contract = require('../models/contract')
 
 StatisticsController.index = function() {
   var self = this;

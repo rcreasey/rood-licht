@@ -1,9 +1,7 @@
 var locomotive = require('locomotive')
   , Controller = locomotive.Controller
-
-var Contract = require('../models/contract');
-
-var ContractsController = new Controller();
+  , ContractsController = new Controller()
+  , Contract = require('../models/contract')
 
 ContractsController.index = function() {
   var self = this;
@@ -25,16 +23,5 @@ ContractsController.index = function() {
     self.render();
   });
 };
-
-
-// ContractsController.completed = function() {
-//   var self = this;
-//   this.title = 'Contracts - Completed';
-
-//   Contract.find({type: 'Courier', $or: [{status: 'Completed'}, {status: 'Rejected'}, {status: 'Deleted'}, {status: 'Failed'}]}).sort('-dateIssued').exec(function(err, contracts) {
-//     self.contracts = contracts;
-//     self.render();
-//   });
-// };
 
 module.exports = ContractsController;

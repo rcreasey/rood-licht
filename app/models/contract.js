@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-  , Schema = mongoose.Schema;
+  , Schema = mongoose.Schema
 
 var Contract = Schema({
   contractID: {type: Number, index: true, unique: true},
@@ -27,6 +27,5 @@ var Contract = Schema({
   collateral: Number,
   volume: Number
 });
-
 
 module.exports = mongoose.model('Contract', Contract);

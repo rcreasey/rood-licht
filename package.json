@@ -33,7 +33,7 @@
     "mongoose-types": "1.0.x",
     "node-rest-client": "0.7.x",
     "passport": "0.1.x",
-    "passport-local": "0.1.x"
-
+    "passport-local": "0.1.x",
+    "passport-local-mongoose": "0.2.x"
   }
 }

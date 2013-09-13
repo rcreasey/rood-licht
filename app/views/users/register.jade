@@ -2,9 +2,9 @@ extends ../layout/default
 
 block content
   h2 Create User
-  form.form-horizontal(action='/users', method='POST')
+  form.form-horizontal(action='/register', method='POST')
     .form-group
-      label.col-lg-2.control-label(for='username') Username
+      label.col-lg-2.control-label(for='username', value=user.username) Username
       .col-lg-10
         input#username.form-control(type='text', name='username', autofocus)
     .form-group
