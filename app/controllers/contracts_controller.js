@@ -3,24 +3,23 @@ var locomotive = require('locomotive')
   , ContractsController = new Controller()
   , Contract = require('../models/contract')
 
-ContractsController.index = function() {  
+ContractsController.index = function(req, res) {  
   var self = this;
   this.title = 'Contracts';
 
   var filters = []
-  if ( this.param('filters') ){
-    for ( var id in this.param('filters').split(',') ){
-      filters.push({status: filters[id]})
-      console.log(filters[id])
-    }
-  } else {
-    filters.push({status: 'Outstanding'})
-    filters.push({status: 'InProgress'})
-  }
+  // if ( this.param('filters') ){
+  //   for ( var id in this.param('filters').split(',') ){
+  //     filters.push({status: filters[id]})
+  //     console.log(filters[id])
+  //   }
+  // } else {
+  filters.push({status: 'Outstanding'});
+  filters.push({status: 'InProgress'});
+  // }
 
   Contract.find({$or: filters}).sort('-dateIssued').exec(function(err, contracts) {
-    self.contracts = contracts;
-    self.render();
+    res.render('contracts/index', {contracts: contracts});
   });
 };
 
