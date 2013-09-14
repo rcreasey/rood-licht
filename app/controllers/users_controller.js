@@ -4,32 +4,26 @@ var locomotive = require('locomotive')
   , UsersController = new Controller()
   , User = require('../models/user')
 
-UsersController.login = function() {
-  this.title = "Login";
-  this.message = this.req.flash('error');
-  this.render();
+UsersController.login = function(req, res) {
+  res.render('users/login', { title: 'Login', user: req.user, messages: req.flash('error') });
 };
 
-UsersController.new = function() {
-  this.title = "Register";
-  this.user = new User();
-  
-  this.render('register');
+UsersController.new = function(req, res) {
+  res.render('users/register', { title: 'Register', user: req.user, messages: req.flash('error') });
 };
 
-UsersController.create = function() {
-  var self = this;
-  User.register(new User({ username : this.req.body.username }), this.req.body.password, function(err, user) {
+UsersController.create = function(req, res) {  
+  User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
     if (err)
-      return self.render('register', { title: 'Register', user : user });
+      return res.render('register', { title: 'Register', user: req.user, messages: err });
 
-    self.redirect('/');
+    res.redirect('/');
   });
 };
 
-UsersController.logout = function() {
-  this.req.logout();
-  return this.redirect('/');
+UsersController.logout = function(req, res) {  
+  req.logout();
+  return res.redirect('/');
 };
 
 module.exports = UsersController;

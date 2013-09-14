@@ -3,13 +3,10 @@ var locomotive = require('locomotive')
   , StatisticsController = new Controller()
   , Contract = require('../models/contract')
 
-StatisticsController.index = function() {
-  var self = this;
-  this.title = 'Statistics';
+StatisticsController.index = function(req, res) {  
 
   Contract.find({type: 'Courier'}).sort('-dateIssued').exec(function(err, contracts) {
-    self.contracts = contracts;
-    self.render();
+    res.render('statistics/index', {title: 'Statistics', user: req.user, contracts: contracts});
   });
 };
 

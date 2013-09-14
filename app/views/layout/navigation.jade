@@ -17,4 +17,7 @@
 
       ul.nav.navbar-nav.navbar-right
         li
-          a(href="/login") Login
+          if user
+            a(href="/logout") Logout
+          else
+            a(href="/login") Login

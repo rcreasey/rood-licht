@@ -4,9 +4,6 @@ var locomotive = require('locomotive')
   , Contract = require('../models/contract')
 
 ContractsController.index = function(req, res) {  
-  var self = this;
-  this.title = 'Contracts';
-
   var filters = []
   // if ( this.param('filters') ){
   //   for ( var id in this.param('filters').split(',') ){
@@ -19,7 +16,7 @@ ContractsController.index = function(req, res) {
   // }
 
   Contract.find({$or: filters}).sort('-dateIssued').exec(function(err, contracts) {
-    res.render('contracts/index', {contracts: contracts});
+    res.render('contracts/index', {title: 'Contracts', user: req.user, contracts: contracts});
   });
 };
 
