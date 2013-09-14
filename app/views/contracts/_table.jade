@@ -3,7 +3,7 @@ p All contracts are up to date within a 10 minute window.
 table#contracts.table.table-condensed.table-hover.dataTable
   thead
     tr
-      th ID
+      th Contract
       th Issuer
       th Status
 
@@ -18,7 +18,7 @@ table#contracts.table.table-condensed.table-hover.dataTable
     each contract in contracts
       tr(class= contract.status.toLowerCase())
         td
-          button.btn.btn-xs.btn-primary(type="button", onclick="CCPEVE.showContract(#{contract.startSolarSystemID}, #{contract.contractID})")= contract.contractID
+          button.btn.btn-xs.btn-primary(type="button", onclick="CCPEVE.showContract(#{contract.startStation.solarSystemID}, #{contract.contractID})")= contract.contractID
         td
           if contract.forCorp
             = contract.issuerCorpName
@@ -27,13 +27,13 @@ table#contracts.table.table-condensed.table-hover.dataTable
             = contract.issuerName
         td= contract.status.replace("InProgress", "In Progress")
         td
-          if contract.startStationName
-            = contract.startStationName.split(' ', 1)
+          if contract.startStation
+            = contract.startStation.stationName.split(' ',1)
           else
             = contract.startStationID
         td
-          if contract.endStationName
-            = contract.endStationName.split(' ',1)
+          if contract.endStation
+            = contract.endStation.stationName.split(' ',1)
           else
             = contract.endStationID
         td

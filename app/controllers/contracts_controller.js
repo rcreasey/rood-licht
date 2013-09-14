@@ -12,10 +12,11 @@ ContractsController.index = function(req, res) {
   //   }
   // } else {
   filters.push({status: 'Outstanding'});
+  filters.push({status: 'Completed'});
   filters.push({status: 'InProgress'});
   // }
 
-  Contract.find({$or: filters}).sort('-dateIssued').exec(function(err, contracts) {
+  Contract.find({$or: filters}).populate('startStation endStation').sort('-dateIssued').exec(function(err, contracts) {
     res.render('contracts/index', {title: 'Contracts', user: req.user, contracts: contracts});
   });
 };

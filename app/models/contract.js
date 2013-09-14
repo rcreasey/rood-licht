@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
+  , Station = require('./station')
 
 var Contract = Schema({
   contractID: {type: Number, index: true, unique: true},
@@ -8,11 +9,9 @@ var Contract = Schema({
   issuerCorpID: Number,
   issuerCorpName: {type: String, default: null},
   startStationID: Number,
-  startStationName: {type: String, default: null},
-  startSolarSystemID: Number,
   endStationID: Number,
-  endStationName: {type: String, default: null},
-  endSolarSystemID: Number,
+  startStation: {type: Schema.Types.ObjectId, ref: 'Station'},
+  endStation: {type: Schema.Types.ObjectId, ref: 'Station'},
   type: String,
   status: String,
   title: String,
