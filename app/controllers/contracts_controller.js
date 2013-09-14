@@ -12,7 +12,6 @@ ContractsController.index = function(req, res) {
   //   }
   // } else {
   filters.push({status: 'Outstanding'});
-  filters.push({status: 'Completed'});
   filters.push({status: 'InProgress'});
   // }
 
