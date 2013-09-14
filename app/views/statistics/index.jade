@@ -2,6 +2,35 @@ extends ../layout/default
 
 block content
 
-  h2 Inbound Status
-  
-  h2 Outbound Status
+  .row
+    .col-md-8.col-md-offset-2
+      h1 Outbound Status
+      table.table.table-condensed.table-hover
+        thead
+          tr
+            th Station
+            th.pending-volume Pending Volume
+        tbody
+          each contract in outbound
+            tr.success
+              td= contract.startStation.stationName
+              td.pending-volume= accounting.formatNumber(contract.volume, 0)
+                |  m
+                sup 3
+
+    .col-md-8.col-md-offset-2
+      h1 Inbound Status
+      table.table.table-condensed.table-hover
+        thead
+          tr
+            th Station
+            th.pending-volume Pending Volume
+        tbody
+          each contract in inbound
+            tr.warning
+              td= contract.endStation.stationName
+              td.pending-volume= accounting.formatNumber(contract.volume, 0)
+                |  m
+                sup 3
+
+

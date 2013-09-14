@@ -6,9 +6,8 @@ var passport = require('passport')
   , users = require('../app/controllers/users_controller')
 
 module.exports = function routes() {
-
   this.get('contracts', login.ensureLoggedIn('/login'), contracts.index);
-  this.get('statistics', login.ensureLoggedIn('/login'), statistics.index);
+  this.get('statistics', statistics.index);
 
   this.get('login', users.login);
   this.post('login', passport.authenticate('local', { successReturnToOrRedirect: '/',
