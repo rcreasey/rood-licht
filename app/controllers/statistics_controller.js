@@ -73,9 +73,9 @@ StatisticsController.index = function(req, res) {
 };
 
 StatisticsController.volume = function(req, res) {
-  var duration = req.param('duration') || 'daily';
-  var fill     = "rgba(151,187,205,0.5)";
-  var stroke   = "rgba(151,187,205,1)";
+  var duration = req.param('duration') || 'weekly';
+  var fill     = "#fcf8e3";
+  var stroke   = "#fbeed5";
   var start, match, label;
 
   switch(duration) {
@@ -138,9 +138,9 @@ StatisticsController.volume = function(req, res) {
 };
 
 StatisticsController.reward = function(req, res) {
-  var duration = req.param('duration') || 'daily';
-  var fill     = "rgba(151,187,205,0.5)";
-  var stroke   = "rgba(151,187,205,1)";
+  var duration = req.param('duration') || 'weekly';
+  var fill     = "#dff0d8";
+  var stroke   = "#d6e9c6";
   var start, match, label;
 
   switch(duration) {
@@ -203,9 +203,9 @@ StatisticsController.reward = function(req, res) {
 };
 
 StatisticsController.failed = function(req, res) {
-  var duration = req.param('duration') || 'daily';
-  var fill     = "rgba(151,187,205,0.5)";
-  var stroke   = "rgba(151,187,205,1)";
+  var duration = req.param('duration') || 'weekly';
+  var fill     = "#f2dede";
+  var stroke   = "#eed3d7";
   var start, match, label;
 
   switch(duration) {
