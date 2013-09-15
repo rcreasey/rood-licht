@@ -5,7 +5,17 @@ block content
   .row
     .col-md-8.col-md-offset-2
       include _navigation
-  
+
+      ul.nav.nav-tabs.duration
+        li(class=duration.match(/^daily$/g)?'active':undefined)
+          a(href='/statistics/volume/daily') Daily
+        li(class=duration.match(/^weekly$/g)?'active':undefined)
+          a(href='/statistics/volume/weekly') Weekly
+        li(class=duration.match(/^monthly$/g)?'active':undefined)
+          a(href='/statistics/volume/monthly') Monthly
+        li(class=duration.match(/^yearly$/g)?'active':undefined)
+          a(href='/statistics/volume/yearly') Yearly
+        
   .row
     .col-md-8.col-md-offset-2
       canvas#statistics(width='750', height='400')

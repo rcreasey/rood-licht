@@ -78,45 +78,41 @@ StatisticsController.volume = function(req, res) {
   var stroke   = "rgba(151,187,205,1)";
 
   switch(duration) {
-    case 'hourly':
-      var start = moment().subtract('day', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day", hour: "$_id.hour"};
-      var label = "contract._id.month + '/' + contract._id.day";
-      break;
     case 'daily':
       var start = moment().subtract('week', 1)._d;
       var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
       var label = "contract._id.month + '/' + contract._id.day";
       break;
     case 'weekly':
-      var start = moment().subtract('week', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
-      var label = "contract._id.month + '/' + contract._id.day";
+      var start = moment().subtract('days', 31.5)._d;
+      var match = {year: "$_id.year", week: "$_id.week"};
+      var label = "'Week ' + contract._id.week";
       break;
     case 'monthly':
-      var start = moment().subtract('month', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
-      var label = "contract._id.month + '/' + contract._id.day";
+      var start = moment().subtract('days', 365)._d;
+      var match = {year: "$_id.year", month: "$_id.month"};
+      var label = "contract._id.month + '/' + contract._id.year";
       break;
     case 'yearly':
-      var start = moment().subtract('year', 100)._d;
+      var start = moment().subtract('year', 3)._d;
       var match = {year: "$_id.year"};
-      var label = "contract._id.month + '/' + contract._id.day";
+      var label = "contract._id.year";
       break;
     default:
-      var start = moment().subtract('day', 31)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day", hour: "$_id.hour"};
+      var start = moment().subtract('week', 1)._d;
+      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
       var label = "contract._id.month + '/' + contract._id.day";
   }
   
   Contract.aggregate(
-      { $match: { status: 'Completed', dateIssued: {$gte: start} }}
+      { $match: { status: 'Completed', dateCompleted: {$gte: start} }}
     , { $project: { 
             _id: {
-                year : { $year : "$dateIssued" }
-              , month : { $month : "$dateIssued" }
-              , day : { $dayOfMonth : "$dateIssued" }
-              , hour : { $hour : "$dateIssued" }
+                year : { $year : "$dateCompleted" }
+              , month : { $month : "$dateCompleted" }
+              , day : { $dayOfMonth : "$dateCompleted" }
+              , week : { $week : "$dateCompleted" }
+              , hour : { $hour : "$dateCompleted" }
             }
           , status: 1
           , volume: 1
@@ -129,7 +125,7 @@ StatisticsController.volume = function(req, res) {
 
       for( id in contracts ) {
         var contract = contracts[id];
-        labels.push( eval(label) );
+        labels.push( String(eval(label)) );
         data.push( parseInt(contract.volume) );
       }
 
