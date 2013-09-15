@@ -4,19 +4,19 @@ block content
   
   .row
     .col-md-8.col-md-offset-2
-      h1 Contracts Completed by Volume
+      h1 Contracts Failed by Reward
 
       include _navigation
 
       ul.nav.nav-tabs.duration
         li(class=duration.match(/^daily$/g)?'active':undefined)
-          a(href='/statistics/volume/daily') Daily
+          a(href='/statistics/failed/daily') Daily
         li(class=duration.match(/^weekly$/g)?'active':undefined)
-          a(href='/statistics/volume/weekly') Weekly
+          a(href='/statistics/failed/weekly') Weekly
         li(class=duration.match(/^monthly$/g)?'active':undefined)
-          a(href='/statistics/volume/monthly') Monthly
+          a(href='/statistics/failed/monthly') Monthly
         li(class=duration.match(/^yearly$/g)?'active':undefined)
-          a(href='/statistics/volume/yearly') Yearly
+          a(href='/statistics/failed/yearly') Yearly
         
   .row
     .col-md-8.col-md-offset-2
