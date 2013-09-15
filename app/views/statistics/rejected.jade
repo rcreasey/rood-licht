@@ -1,0 +1,34 @@
+extends ../layout/default
+
+block content
+  
+  .row
+    .col-md-8.col-md-offset-2
+      h1 Contracts Rejected
+
+      include _navigation
+
+      ul.nav.nav-tabs.duration
+        li(class=duration.match(/^daily$/g)?'active':undefined)
+          a(href='/statistics/rejected/daily') Daily
+        li(class=duration.match(/^weekly$/g)?'active':undefined)
+          a(href='/statistics/rejected/weekly') Weekly
+        li(class=duration.match(/^monthly$/g)?'active':undefined)
+          a(href='/statistics/rejected/monthly') Monthly
+        li(class=duration.match(/^yearly$/g)?'active':undefined)
+          a(href='/statistics/rejected/yearly') Yearly
+        
+  .row
+    .col-md-8.col-md-offset-2
+      canvas#statistics(width='750', height='400')
+
+      script(type='text/javascript')
+        (function() {
+          $(document).ready(function() {
+            var chart, ctx;
+            ctx = $("#statistics").get(0).getContext("2d");
+            data = !{results}
+            return chart = new Chart(ctx).Bar(data);
+          });
+
+        }).call(this);
