@@ -4,18 +4,6 @@ block content
   .alert.alert-info
     strong Contracts are up to date within a 10 minute window.
 
-  ul.nav.nav-pills
-    li(class=filter.match(/^outstanding$/g)?'active':undefined)
-      a(href='/contracts/outstanding') Outstanding
-    li(class=filter.match(/^inprogress$/g)?'active':undefined)
-      a(href='/contracts/inprogress') In Progress
-    li(class=filter.match(/^completed$/g)?'active':undefined)
-      a(href='/contracts/completed') Completed
-    li(class=filter.match(/^failed$/g)?'active':undefined)
-      a(href='/contracts/failed') Failed
-    li(class=filter.match(/^rejected$/g)?'active':undefined)
-      a(href='/contracts/rejected') Rejected
-    li(class=filter.match(/^cancelled$/g)?'active':undefined)
-      a(href='/contracts/cancelled') Cancelled
+  include _navigation
 
   include _table

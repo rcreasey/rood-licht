@@ -5,9 +5,10 @@ var locomotive = require('locomotive')
   , moment = require('moment')
 
 ContractsController.index = function(req, res) {
+  var filter = req.param('filter')
   var filters = [];
 
-  switch(req.param('filter')) {
+  switch(filter) {
     case 'outstanding':
       filters.push({status: 'Outstanding'});
       break;
@@ -28,11 +29,11 @@ ContractsController.index = function(req, res) {
       break;
     default:
       filters.push({status: 'Outstanding'});
-      filters.push({status: 'InProgress'});
+      filter = 'outstanding';
   }
 
   Contract.find({$or: filters, dateIssued: { $lt: moment(), $gt: moment().subtract('week', 2)._d }}).populate('startStation endStation').sort('-dateIssued').exec(function(err, contracts) {
-    res.render('contracts/index', {title: 'Contracts', user: req.user, filter: req.param('filter') || 'current', contracts: contracts});
+    res.render('contracts/index', {title: 'Contracts', user: req.user, filter: filter, contracts: contracts});
   });
 };
 
