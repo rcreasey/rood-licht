@@ -7,6 +7,7 @@ var passport = require('passport')
 
 module.exports = function routes() {
   this.get('contracts', login.ensureLoggedIn('/login'), contracts.index);
+  this.get('contracts/:filter', login.ensureLoggedIn('/login'), contracts.index);
   this.get('statistics', statistics.index);
 
   this.get('login', users.login);

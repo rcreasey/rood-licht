@@ -1,7 +1,7 @@
 $.extend(true, $.fn.dataTable.defaults, {
   sDom: "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
   sPaginationType: "bootstrap",
-  iDisplayLength: 50,
+  iDisplayLength: 25,
   oLanguage: {
     sLengthMenu: "_MENU_ records per page"
   }
