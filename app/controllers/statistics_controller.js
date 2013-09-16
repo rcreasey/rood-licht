@@ -3,6 +3,7 @@ var locomotive = require('locomotive')
   , StatisticsController = new Controller()
   , async = require('async')
   , moment = require('moment')
+  , _ = require('underscore')
   , Contract = require('../models/contract')
   , Station = require('../models/station')
 
@@ -72,39 +73,117 @@ StatisticsController.index = function(req, res) {
 
 };
 
+Number.prototype.mod = function(n) {
+  return ((this%n)+n)%n;
+};
+
+var graph_constraints = function(duration) {
+  var start, match, format_data;
+
+  switch(duration) {
+    case 'daily':
+      start = moment().subtract('week', 1)._d;
+      match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
+      format_data = function(contracts) {
+        var labels = new Array;
+        var data   = new Array;
+        var period_length = 14;
+        var period_end   = moment()._d.getDate();
+        var period_start = period_end - period_length;
+
+        for ( var index = period_start; index <= period_end; index++ ){
+          var date = moment().subtract('day', period_end - index);
+          var contract = _.find(contracts, function(c) { return c._id.day == index; })  || 
+                               {_id: {year: date.year(), month: date.month() + 1, day: date._d.getDate()}, value: 0};
+
+          labels.push( String( contract._id.month + '/' + contract._id.day ) );
+          data.push( parseInt( contract.value ) );
+        }
+
+        return {labels: labels, data: data};
+      };
+      break;
+    case 'monthly':
+      start = moment().subtract('days', 365)._d;
+      match = {year: "$_id.year", month: "$_id.month"};
+      format_data = function(contracts) {
+        var labels = new Array;
+        var data   = new Array;
+        var period_length = 6;
+        var period_end   = moment().month() + 1;
+        var period_start = period_end - period_length;
+
+        for ( var index = period_start; index <= period_end; index++ ){
+          var date = moment().subtract('month', period_end - index);
+          var contract = _.find(contracts, function(c) { return c._id.month == index; }) || 
+                               {_id: {year: date.year(), month: date.month() + 1, day: date._d.getDate()}, value: 0};
+
+          labels.push( String( contract._id.month + '/' + contract._id.year ) );
+          data.push( parseInt( contract.value ) );
+        }
+
+        return {labels: labels, data: data};
+      };
+      break;
+    case 'yearly':
+      start = moment().subtract('year', 3)._d;
+      match = {year: "$_id.year"};
+      format_data = function(contracts) {
+        var labels = new Array;
+        var data   = new Array;
+        var period_length = 3;
+        var period_end   = moment().year();
+        var period_start = period_end - period_length;
+
+        for ( var index = period_start; index <= period_end; index++ ){
+          var contract = _.find(contracts, function(c) { return c._id.year == index; }) || 
+                               {_id: {year: index}, value: null};
+
+          labels.push( String( contract._id.year ) );
+          data.push( parseInt( contract.value || 0) );
+        }
+
+        return {labels: labels, data: data};
+      };
+      break;
+    case 'weekly':
+    default:
+      start = moment().subtract('days', 31.5)._d;
+      match = {year: "$_id.year", week: "$_id.week"};
+      format_data = function(contracts) {
+        var labels = new Array;
+        var data   = new Array;
+        var period_length = 10;
+        var period_end   = moment().week() - 1;
+        var period_start = period_end - period_length;
+
+        for ( var index = period_start; index <= period_end; index++ ){
+          var date = moment().subtract('week', period_end - index);
+          var contract = _.find(contracts, function(c) { return c._id.week == index; }) || 
+                               {_id: {year: date.year(), month: date.month() + 1, day: date._d.getDate(), week: date.week()}, value: 0};
+
+          labels.push( String( 'Week ' + contract._id.week ) );
+          data.push( parseInt( contract.value ) );
+        }
+
+        return {labels: labels, data: data};
+      };
+      break;
+  };
+
+  return {start: start, match: match, format_data: format_data};
+}
+
 StatisticsController.volume = function(req, res) {
   var duration = req.param('duration') || 'weekly';
   var fill     = "#fcf8e3";
   var stroke   = "#fbeed5";
-  var start, match, label;
 
-  switch(duration) {
-    case 'daily':
-      var start = moment().subtract('week', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
-      var label = "contract._id.month + '/' + contract._id.day";
-      break;
-    case 'weekly':
-      var start = moment().subtract('days', 31.5)._d;
-      var match = {year: "$_id.year", week: "$_id.week"};
-      var label = "'Week ' + contract._id.week";
-      break;
-    case 'monthly':
-      var start = moment().subtract('days', 365)._d;
-      var match = {year: "$_id.year", month: "$_id.month"};
-      var label = "contract._id.month + '/' + contract._id.year";
-      break;
-    case 'yearly':
-      var start = moment().subtract('year', 3)._d;
-      var match = {year: "$_id.year"};
-      var label = "contract._id.year";
-      break;
-    default:
-      var start = moment().subtract('week', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
-      var label = "contract._id.month + '/' + contract._id.day";
-  }
-  
+  constraints = graph_constraints( duration );
+  var start = constraints.start;
+  var match = constraints.match;
+  var format_data = constraints.format_data;
+
   Contract.aggregate(
       { $match: { status: 'Completed', dateCompleted: {$gte: start} }}
     , { $project: { 
@@ -118,17 +197,12 @@ StatisticsController.volume = function(req, res) {
           , status: 1
           , volume: 1
       }}
-    , { $group: { _id: match, volume: {$sum: "$volume"}}}
+    , { $group: { _id: match, value: {$sum: "$volume"}}}
     , { $sort : { _id : 1 }}
     , function(err, contracts) {
-      var labels = new Array
-        , data = new Array;
-
-      for( id in contracts ) {
-        var contract = contracts[id];
-        labels.push( String(eval(label)) );
-        data.push( parseInt(contract.volume) );
-      }
+      var formatted_data = format_data( contracts );
+      var labels = formatted_data.labels
+        , data = formatted_data.data;
 
       var results = {labels: labels, datasets: [{ fillColor: fill, strokeColor: stroke, data: data }]};
       res.render('statistics/volume', {title: 'Statistics :: Volume', user: req.user, duration: duration, results: JSON.stringify(results) });
@@ -143,32 +217,10 @@ StatisticsController.reward = function(req, res) {
   var stroke   = "#d6e9c6";
   var start, match, label;
 
-  switch(duration) {
-    case 'daily':
-      var start = moment().subtract('week', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
-      var label = "contract._id.month + '/' + contract._id.day";
-      break;
-    case 'weekly':
-      var start = moment().subtract('days', 31.5)._d;
-      var match = {year: "$_id.year", week: "$_id.week"};
-      var label = "'Week ' + contract._id.week";
-      break;
-    case 'monthly':
-      var start = moment().subtract('days', 365)._d;
-      var match = {year: "$_id.year", month: "$_id.month"};
-      var label = "contract._id.month + '/' + contract._id.year";
-      break;
-    case 'yearly':
-      var start = moment().subtract('year', 3)._d;
-      var match = {year: "$_id.year"};
-      var label = "contract._id.year";
-      break;
-    default:
-      var start = moment().subtract('week', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
-      var label = "contract._id.month + '/' + contract._id.day";
-  }
+  constraints = graph_constraints( duration );
+  var start = constraints.start;
+  var match = constraints.match;
+  var format_data = constraints.format_data;
   
   Contract.aggregate(
       { $match: { status: 'Completed', dateCompleted: {$gte: start} }}
@@ -183,17 +235,12 @@ StatisticsController.reward = function(req, res) {
           , status: 1
           , reward: 1
       }}
-    , { $group: { _id: match, reward: {$sum: "$reward"}}}
+    , { $group: { _id: match, value: {$sum: "$reward"}}}
     , { $sort : { _id : 1 }}
     , function(err, contracts) {
-      var labels = new Array
-        , data = new Array;
-
-      for( id in contracts ) {
-        var contract = contracts[id];
-        labels.push( String(eval(label)) );
-        data.push( parseInt(contract.reward) );
-      }
+      var formatted_data = format_data( contracts );
+      var labels = formatted_data.labels
+        , data = formatted_data.data;
 
       var results = {labels: labels, datasets: [{ fillColor: fill, strokeColor: stroke, data: data }]};
       res.render('statistics/reward', {title: 'Statistics :: Reward', user: req.user, duration: duration, results: JSON.stringify(results) });
@@ -208,32 +255,10 @@ StatisticsController.failed = function(req, res) {
   var stroke   = "#eed3d7";
   var start, match, label;
 
-  switch(duration) {
-    case 'daily':
-      var start = moment().subtract('week', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
-      var label = "contract._id.month + '/' + contract._id.day";
-      break;
-    case 'weekly':
-      var start = moment().subtract('days', 31.5)._d;
-      var match = {year: "$_id.year", week: "$_id.week"};
-      var label = "'Week ' + contract._id.week";
-      break;
-    case 'monthly':
-      var start = moment().subtract('days', 365)._d;
-      var match = {year: "$_id.year", month: "$_id.month"};
-      var label = "contract._id.month + '/' + contract._id.year";
-      break;
-    case 'yearly':
-      var start = moment().subtract('year', 3)._d;
-      var match = {year: "$_id.year"};
-      var label = "contract._id.year";
-      break;
-    default:
-      var start = moment().subtract('week', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
-      var label = "contract._id.month + '/' + contract._id.day";
-  }
+  constraints = graph_constraints( duration );
+  var start = constraints.start;
+  var match = constraints.match;
+  var format_data = constraints.format_data;
   
   Contract.aggregate(
       { $match: { status: 'Failed', dateExpired: {$gte: start} }}
@@ -248,17 +273,12 @@ StatisticsController.failed = function(req, res) {
           , status: 1
           , reward: 1
       }}
-    , { $group: { _id: match, reward: {$sum: "$reward"}}}
+    , { $group: { _id: match, value: {$sum: 1}}}
     , { $sort : { _id : 1 }}
     , function(err, contracts) {
-      var labels = new Array
-        , data = new Array;
-
-      for( id in contracts ) {
-        var contract = contracts[id];
-        labels.push( String(eval(label)) );
-        data.push( parseInt(contract.reward) );
-      }
+      var formatted_data = format_data( contracts );
+      var labels = formatted_data.labels
+        , data = formatted_data.data;
 
       var results = {labels: labels, datasets: [{ fillColor: fill, strokeColor: stroke, data: data }]};
       res.render('statistics/failed', {title: 'Statistics :: Failed', user: req.user, duration: duration, results: JSON.stringify(results) });
@@ -273,32 +293,10 @@ StatisticsController.rejected = function(req, res) {
   var stroke   = "#eed3d7";
   var start, match, label;
 
-  switch(duration) {
-    case 'daily':
-      var start = moment().subtract('week', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
-      var label = "contract._id.month + '/' + contract._id.day";
-      break;
-    case 'weekly':
-      var start = moment().subtract('days', 31.5)._d;
-      var match = {year: "$_id.year", week: "$_id.week"};
-      var label = "'Week ' + contract._id.week";
-      break;
-    case 'monthly':
-      var start = moment().subtract('days', 365)._d;
-      var match = {year: "$_id.year", month: "$_id.month"};
-      var label = "contract._id.month + '/' + contract._id.year";
-      break;
-    case 'yearly':
-      var start = moment().subtract('year', 3)._d;
-      var match = {year: "$_id.year"};
-      var label = "contract._id.year";
-      break;
-    default:
-      var start = moment().subtract('week', 1)._d;
-      var match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
-      var label = "contract._id.month + '/' + contract._id.day";
-  }
+  constraints = graph_constraints( duration );
+  var start = constraints.start;
+  var match = constraints.match;
+  var format_data = constraints.format_data;
   
   Contract.aggregate(
       { $match: { status: 'Rejected', dateIssued: {$gte: start} }}
@@ -311,19 +309,14 @@ StatisticsController.rejected = function(req, res) {
               , hour : { $hour : "$dateIssued" }
             }
           , status: 1
-          , count: 1
+          , value: 1
       }}
-    , { $group: { _id: match, count: {$sum: 1}}}
+    , { $group: { _id: match, value: {$sum: 1}}}
     , { $sort : { _id : 1 }}
     , function(err, contracts) {
-      var labels = new Array
-        , data = new Array;
-
-      for( id in contracts ) {
-        var contract = contracts[id];
-        labels.push( String(eval(label)) );
-        data.push( parseInt(contract.count) );
-      }
+      var formatted_data = format_data( contracts );
+      var labels = formatted_data.labels
+        , data = formatted_data.data;
 
       var results = {labels: labels, datasets: [{ fillColor: fill, strokeColor: stroke, data: data }]};
       res.render('statistics/rejected', {title: 'Statistics :: Rejected', user: req.user, duration: duration, results: JSON.stringify(results) });

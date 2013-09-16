@@ -29,6 +29,8 @@ ul.duration {
   max-width: none;
 }
 
+.table-condensed thead>tr>th, .table-condensed tbody>tr>th, .table-condensed tfoot>tr>th, .table-condensed thead>tr>td, .table-condensed tbody>tr>td, .table-condensed tfoot>tr>td { padding: 0; }
+
 .table > tbody > tr.completed > td,
 .table > tbody > tr.rejected > td,
 .table > tbody > tr.deleted > td {
@@ -49,6 +51,10 @@ ul.duration {
 .table > tbody > tr.inprogress > td {
   background-color: #fcf8e3;
   border-color: #fbeed5;
+}
+
+.table .badge {
+  margin: 2px 5px 0;
 }
 
 table.table thead .sorting,
