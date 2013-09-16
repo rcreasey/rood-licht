@@ -8,8 +8,7 @@ var passport = require('passport')
 module.exports = function routes() {
   this.get('contracts/?:filter?', login.ensureLoggedIn('/login'), contracts.index);
   this.get('statistics/?', login.ensureLoggedIn('/login'), statistics.index);
-  this.get('statistics/volume/?:duration?', statistics.volume);
-  // this.get('statistics/volume/?:duration?', login.ensureLoggedIn('/login'), statistics.volume);
+  this.get('statistics/volume/?:duration?', login.ensureLoggedIn('/login'), statistics.volume);
   this.get('statistics/reward/?:duration?', login.ensureLoggedIn('/login'), statistics.reward);
   this.get('statistics/failed/?:duration?', login.ensureLoggedIn('/login'), statistics.failed);
   this.get('statistics/rejected/?:duration?', login.ensureLoggedIn('/login'), statistics.rejected);
