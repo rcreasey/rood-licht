@@ -19,7 +19,7 @@ RoutesController.new = function(req, res) {
   route.startStation = {startStationName: 'Station Name'};
   route.endStation = {endStationName: 'Station Name'};
 
-  Station.find({}).sort('stationName').exec(function(err, stations) {
+  Station.find({}).sort('rate stationName').exec(function(err, stations) {
     var station_data = _.map(stations, function(station) { return station.stationName });
     res.render('routes/new', { title: 'Routes :: Create Route', user: req.user, route: route, stations: JSON.stringify(station_data) });
   });
