@@ -205,7 +205,7 @@ StatisticsController.volume = function(req, res) {
         , data = formatted_data.data;
 
       var results = {labels: labels, datasets: [{ fillColor: fill, strokeColor: stroke, data: data }]};
-      res.render('statistics/volume', {title: 'Statistics :: Volume', user: req.user, duration: duration, results: JSON.stringify(results) });
+      res.render('statistics/volume', {title: 'Statistics :: Volume', user: req.user, duration: duration, results: JSON.stringify(results), contracts: contracts });
     }
   );
 
@@ -243,7 +243,7 @@ StatisticsController.reward = function(req, res) {
         , data = formatted_data.data;
 
       var results = {labels: labels, datasets: [{ fillColor: fill, strokeColor: stroke, data: data }]};
-      res.render('statistics/reward', {title: 'Statistics :: Reward', user: req.user, duration: duration, results: JSON.stringify(results) });
+      res.render('statistics/reward', {title: 'Statistics :: Reward', user: req.user, duration: duration, results: JSON.stringify(results), contracts: contracts });
     }
   );
 
@@ -281,7 +281,7 @@ StatisticsController.failed = function(req, res) {
         , data = formatted_data.data;
 
       var results = {labels: labels, datasets: [{ fillColor: fill, strokeColor: stroke, data: data }]};
-      res.render('statistics/failed', {title: 'Statistics :: Failed', user: req.user, duration: duration, results: JSON.stringify(results) });
+      res.render('statistics/failed', {title: 'Statistics :: Failed', user: req.user, duration: duration, results: JSON.stringify(results), contracts: contracts });
     }
   );
 
@@ -319,7 +319,7 @@ StatisticsController.rejected = function(req, res) {
         , data = formatted_data.data;
 
       var results = {labels: labels, datasets: [{ fillColor: fill, strokeColor: stroke, data: data }]};
-      res.render('statistics/rejected', {title: 'Statistics :: Rejected', user: req.user, duration: duration, results: JSON.stringify(results) });
+      res.render('statistics/rejected', {title: 'Statistics :: Rejected', user: req.user, duration: duration, results: JSON.stringify(results), contracts: contracts });
     }
   );
 

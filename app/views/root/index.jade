@@ -9,7 +9,8 @@ block content
     .row
       .col-md-4
         h2 Contract Details
-        p This service is open to everyone blue to GSF. 
+        .alert.alert-info
+          p This service is open to everyone blue to GSF!
         ul
           li 
             | Contract your items in a courier contract to the corp 
@@ -32,109 +33,24 @@ block content
           li No maximum value on packages.
         p Contracts from neutral alts from Jita are not a problem. Contracts from neutral alts from Nullsec to Jita is a no-go.
 
-      .rates.col-md-4
+      .col-md-4
         h2 Route Rates
         h3 Deklein Routes:
-        .row
-          .col-sm-8
-            strong Regional Stops
-          .col-sm-4 
-            ul.list-unstyled
-                li UMI-KK
-                li QPO-WI
-                li VFK-IV
-                li JU-OWQ
 
-        .row
-          .col-sm-8
-            strong  Regional Stop &lt;-&gt; Regional Stop
-          .col-sm-4 100isk @ m
-            sup 3
+        table.table.table-striped.table-condensed
+          tbody
+          each route in routes
+            if route.is_deklein
+              include _row_route
 
-        .row
-          .col-sm-8
-            strong MZ1E-P &lt;-&gt; Regional Stop
-          .col-sm-4 150isk @ m
-            sup 3
+      .col-md-4
+        h2 &#160;
+        h3 War Front Routes:
 
-        .row
-          .col-sm-8
-            strong Jita &lt;-&gt; Regional Stop
-          .col-sm-4 250isk @ m
-            sup 3
+        table.table.table-striped.table-condensed
+          tbody
+          each route in routes
+            if ! route.is_deklein
+              include _row_route
 
-      #war-rates.rates.col-md-4
-        h3 War Front Routes: 
-
-        .row
-          .col-sm-8
-            strong 4-EP12 &lt;-&gt; A-1CON
-          .col-sm-4 150isk @ m
-            sup 3
-
-        .row
-          .col-sm-8
-            strong B-DBYQ &lt;-&gt; 4-EP12
-          .col-sm-4 250isk @ m
-            sup 3
-
-        .row
-          .col-sm-8
-            strong Jita &lt;-&gt; B-DBYQ 
-          .col-sm-4 250isk @ m
-            sup 3
-
-        .row
-          .col-sm-8
-            strong B-DBYQ &lt;-&gt; A-1CON 
-          .col-sm-4 300isk @ m
-            sup 3
-            
-        .row
-          .col-sm-8
-            strong Jita &lt;-&gt; 4-EP12 
-          .col-sm-4 350isk @ m
-            sup 3
-
-        .row
-          .col-sm-8
-            strong Jita &lt;-&gt; 1DH-SX 
-          .col-sm-4 400isk @ m
-            sup 3
-
-        .row
-          .col-sm-8
-            strong Jita &lt;-&gt; G-TT5V 
-          .col-sm-4 450isk @ m
-            sup 3
-
-        .row
-          .col-sm-8
-            strong Jita &lt;-&gt; F2OY-X 
-          .col-sm-4 450isk @ m
-            sup 3
-
-        .row
-          .col-sm-8
-            strong Deklein Stop &lt;-&gt; 4-EP12
-          .col-sm-4 500isk @ m
-            sup 3
-
-        .row
-          .col-sm-8
-            strong Deklein Stop &lt;-&gt; 1DH-SX
-          .col-sm-4 650isk @ m
-            sup 3
-
-        .row
-          .col-sm-8
-            strong Deklein Stop &lt;-&gt; G-TT5V
-          .col-sm-4 700isk @ m
-            sup 3
-
-        .row
-          .col-sm-8
-            strong Deklein Stop &lt;-&gt; F2OY-X
-          .col-sm-4 700isk @ m
-            sup 3
 

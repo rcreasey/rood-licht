@@ -1,0 +1,24 @@
+table#routes.table.table-hover
+  thead
+    tr
+      th Start Station
+      th End Station
+      th Rate
+      th Deklein Route
+      th Action
+
+  tbody
+    each route in routes
+      tr
+        td= route.startStation.stationName
+        td= route.endStation.stationName
+        td
+          = route.rate
+          | isk @ m
+          sup 3
+        td= route.is_deklein
+        td
+          form(method="post", action="/routes/#{route.id}")
+            input(type="hidden", name="id", value=route.id)
+            input(type="hidden", name="_method", value="DELETE")
+            input.btn.btn-danger.btn-xs(value="Delete", type="submit")

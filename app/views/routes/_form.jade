@@ -1,0 +1,44 @@
+form.form-horizontal(action='/routes', method='POST')
+  .form-group
+    label.col-lg-2.control-label(for='startStationName') Start Station
+    .col-lg-10
+      input#startStation.form-control.col-lg-10(type='text', name='startStationName', placeholder="Start Station Name")
+
+  .form-group
+    label.col-lg-2.control-label(for='endStationName') End Station
+    .col-lg-10
+      input#endStation.form-control.col-lg-10(type='text', name='endStationName', placeholder="End Station Name")
+
+  .form-group
+    label.col-lg-2.control-label(for='rate') Rate
+    .col-lg-10
+      .input-group
+        span.input-group-addon $
+        input#rate.form-control(type='text', name='rate', value=route.rate)
+        span.input-group-addon
+          | isk @ m
+          sup 3
+
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      button.btn.btn-primary(type='submit') Create Route
+
+  script(type='text/javascript')
+    (function() {
+      $(document).ready(function() {
+        var stations = !{stations};
+
+        $('#startStation').typeahead({
+          name: 'stations',
+          local: stations
+        });
+
+        $('#endStation').typeahead({
+          name: 'stations',
+          local: stations
+        });
+
+        return true
+      });
+
+    }).call(this);
