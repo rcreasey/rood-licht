@@ -77,6 +77,6 @@ async.waterfall([
   }
 ], function() {
   console.log('');
-  console.log('       %s Contracts Checked for Validity', count);
+  console.log('       %s Contracts Checked', count);
   mongoose.disconnect();
 });
