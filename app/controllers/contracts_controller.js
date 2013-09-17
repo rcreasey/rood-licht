@@ -32,7 +32,7 @@ ContractsController.index = function(req, res) {
       filter = 'outstanding';
   }
 
-  Contract.find({$or: filters, dateIssued: { $lt: moment(), $gt: moment().subtract('week', 2)._d }}).populate('startStation endStation').sort('-dateIssued').exec(function(err, contracts) {
+  Contract.find({$or: filters, dateIssued: { $lt: moment(), $gt: moment().subtract('week', 1)._d }}).populate('startStation endStation').sort('-dateIssued').exec(function(err, contracts) {
     res.render('contracts/index', {title: 'Contracts', user: req.user, filter: filter, contracts: contracts});
   });
 };

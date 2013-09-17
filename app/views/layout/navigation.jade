@@ -14,7 +14,9 @@
           a(href='/contracts') Contracts
         li(class=title.match(/^Statistics/g)?'active':undefined)
           a(href='/statistics') Statistics
-
+        if user
+          li(class=title.match(/^Routes/g)?'active':undefined)
+            a(href='/routes') Routes
       ul.nav.navbar-nav.navbar-right
         li
           if user
