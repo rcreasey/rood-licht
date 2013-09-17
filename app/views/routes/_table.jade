@@ -4,7 +4,6 @@ table#routes.table.table-hover
       th Start Station
       th End Station
       th Rate
-      th Deklein Route
       th Action
 
   tbody
@@ -16,7 +15,6 @@ table#routes.table.table-hover
           = route.rate
           | isk @ m
           sup 3
-        td= route.is_deklein
         td
           form(method="post", action="/routes/#{route.id}")
             input(type="hidden", name="id", value=route.id)

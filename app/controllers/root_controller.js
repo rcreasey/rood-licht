@@ -5,7 +5,7 @@ var locomotive = require('locomotive')
 
 
 RootController.index = function(req, res) {
-  Route.find({}).populate('startStation endStation').sort('rate').exec(function(err, routes) {
+  Route.find({}).populate('startStation endStation').sort('rate startStation.stationName').exec(function(err, routes) {
     res.render('root/index', {title: 'Pricing', user: req.user, routes: routes});
   })
 };

@@ -8,7 +8,7 @@ var locomotive = require('locomotive')
 
 RoutesController.index = function(req, res) {
   var self = this;
-  Route.find({}).populate('startStation endStation').sort('-rate startStation.stationName').exec(function(err, routes) {
+  Route.find({}).populate('startStation endStation').sort('rate startStation.stationName').exec(function(err, routes) {
     res.render('routes/index', { title: 'Routes', user: req.user, routes: routes });
 
   });

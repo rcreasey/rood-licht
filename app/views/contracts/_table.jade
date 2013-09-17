@@ -9,12 +9,13 @@ table#contracts.table.table-condensed.table-hover.dataTable
       th Destination
       th Volume
       th Reward
+      th Tip
 
       th Issued
 
   tbody
     each contract in contracts
-      tr(class= contract.status.toLowerCase())
+      tr(class=contract.is_valid ? contract.delta > 0 ? 'success' : undefined : 'danger')
         td
           button.btn.btn-xs.btn-primary(type="button", onclick="CCPEVE.showContract(#{contract.startStation.solarSystemID}, #{contract.contractID})")= contract.contractID
         td
@@ -23,6 +24,9 @@ table#contracts.table.table-condensed.table-hover.dataTable
             span.badge.pull-right Corp
           else
             = contract.issuerName
+
+          if contract.note
+            span.badge.pull-right= contract.note
         td= contract.status.replace("InProgress", "In Progress")
         td
           if contract.startStation
@@ -39,4 +43,5 @@ table#contracts.table.table-condensed.table-hover.dataTable
           |  m
           sup 3
         td= accounting.formatNumber(contract.reward)
-        td= moment(String(contract.dateIssued)).format("YYYY-MM-DD HH:mm:ss")
+        td= accounting.formatNumber(contract.delta)
+        td= moment(String(contract.dateIssued)).format("YYYY-MM-DD HH:mm")

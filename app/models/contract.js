@@ -24,7 +24,11 @@ var Contract = Schema({
   price: Number,
   reward: Number,
   collateral: Number,
-  volume: Number
+  volume: Number,
+  cost: Number,
+  delta: Number,
+  is_valid: Boolean,
+  note: String
 });
 
 module.exports = mongoose.model('Contract', Contract);
