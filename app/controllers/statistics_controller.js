@@ -249,6 +249,44 @@ StatisticsController.reward = function(req, res) {
 
 };
 
+StatisticsController.tips = function(req, res) {
+  var duration = req.param('duration') || 'weekly';
+  var fill     = "#5bc0de";
+  var stroke   = "#46b8da";
+  var start, match, label;
+
+  constraints = graph_constraints( duration );
+  var start = constraints.start;
+  var match = constraints.match;
+  var format_data = constraints.format_data;
+  
+  Contract.aggregate(
+      { $match: { status: 'Completed', dateCompleted: {$gte: start} }}
+    , { $project: { 
+            _id: {
+                year : { $year : "$dateCompleted" }
+              , month : { $month : "$dateCompleted" }
+              , day : { $dayOfMonth : "$dateCompleted" }
+              , week : { $week : "$dateCompleted" }
+              , hour : { $hour : "$dateCompleted" }
+            }
+          , status: 1
+          , delta: 1
+      }}
+    , { $group: { _id: match, value: {$sum: "$delta"}}}
+    , { $sort : { _id : 1 }}
+    , function(err, contracts) {
+      var formatted_data = format_data( contracts );
+      var labels = formatted_data.labels
+        , data = formatted_data.data;
+
+      var results = {labels: labels, datasets: [{ fillColor: fill, strokeColor: stroke, data: data }]};
+      res.render('statistics/tips', {title: 'Statistics :: Tips', user: req.user, duration: duration, results: JSON.stringify(results), contracts: contracts });
+    }
+  );
+
+};
+
 StatisticsController.failed = function(req, res) {
   var duration = req.param('duration') || 'weekly';
   var fill     = "#f2dede";
