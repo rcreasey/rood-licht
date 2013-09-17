@@ -18,8 +18,6 @@ block content
         li(class=duration.match(/^yearly$/g)?'active':undefined)
           a(href='/statistics/reward/yearly') Yearly
         
-  .row
-    .col-md-8.col-md-offset-2
       canvas#statistics(width='750', height='400')
 
       script(type='text/javascript')
@@ -32,3 +30,7 @@ block content
           });
 
         }).call(this);
+
+  .row
+    .col-md-4.col-md-offset-4
+      include _table

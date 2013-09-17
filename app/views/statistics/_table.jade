@@ -1,0 +1,23 @@
+table.table.table-condensed.table-striped
+  thead
+    th Period
+    th.values= title.split('::')[1]
+
+  tbody
+    each contract in contracts
+      tr
+        td 
+          - if (contract._id.week)
+            | Week #{contract._id.week}
+          - else
+            - if (contract._id.month)
+              !{contract._id.month}/
+            - if (contract._id.day)
+              !{contract._id.day}/
+            - if (contract._id.year)
+              !{contract._id.year}
+        td.values
+          = accounting.formatNumber(contract.value)
+          - if ( title.match(/Volume/g) )
+            |  m
+            sup 3
