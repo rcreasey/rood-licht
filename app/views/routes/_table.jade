@@ -4,7 +4,7 @@ table#routes.table.table-hover
       th Start Station
       th End Station
       th Rate
-      th Action
+      th.actions Action
 
   tbody
     each route in routes
@@ -15,7 +15,7 @@ table#routes.table.table-hover
           = route.rate
           | isk @ m
           sup 3
-        td
+        td.actions
           form(method="post", action="/routes/#{route.id}")
             input(type="hidden", name="id", value=route.id)
             input(type="hidden", name="_method", value="DELETE")

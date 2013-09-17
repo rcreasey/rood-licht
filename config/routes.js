@@ -21,6 +21,9 @@ module.exports = function routes() {
   this.get('statistics/failed/?:duration?', login.ensureLoggedIn('/login'), statistics.failed);
   this.get('statistics/rejected/?:duration?', login.ensureLoggedIn('/login'), statistics.rejected);
 
+  this.get('users/?', login.ensureLoggedIn('/login'), users.index);
+  this.del('users/:id', login.ensureLoggedIn('/login'), users.destroy);
+
   this.get('login', users.login);
   this.post('login', passport.authenticate('local', { successReturnToOrRedirect: '/',
                                                       failureRedirect: '/login',
