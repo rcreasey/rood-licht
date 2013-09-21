@@ -7,11 +7,10 @@ table#contracts.table.table-condensed.table-hover.dataTable
 
       th Origin
       th Destination
-      th Volume
-      th Reward
-      th Tip
-
-      th Issued
+      th.values Volume
+      th.values Reward
+      th.values Tip
+      th.values Issued
 
   tbody
     each contract in contracts
@@ -39,10 +38,7 @@ table#contracts.table.table-condensed.table-hover.dataTable
               = contract.endStation.stationName.split(' ',1)
             else
               = contract.endStationID
-          td
-            = accounting.toFixed(contract.volume, 2)
-            |  m
-            sup 3
-          td= accounting.formatNumber(contract.reward)
-          td= accounting.formatNumber(contract.delta)
-          td= moment(String(contract.dateIssued)).format("YYYY-MM-DD")
+          td.values= accounting.toFixed(contract.volume, 2)
+          td.values= accounting.formatNumber(contract.reward)
+          td.values= accounting.formatNumber(contract.delta)
+          td.values= moment(String(contract.dateIssued)).format("YYYY-MM-DD")
