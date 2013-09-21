@@ -21,10 +21,10 @@ table#contracts.table.table-condensed.table-hover.dataTable
             button.btn.btn-xs.btn-primary(type="button", onclick="CCPEVE.showContract(#{contract.startStation.solarSystemID}, #{contract.contractID})")= contract.contractID
           td
             if contract.forCorp
-              = contract.issuerCorpName.substring(0, 25)
+              = contract.issuerCorpName
               span.badge.pull-right Corp
             else
-              = contract.issuerName.substring(0, 25)
+              = contract.issuerName
 
             if contract.note
               span.badge.pull-right= contract.note
