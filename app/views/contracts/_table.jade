@@ -15,33 +15,34 @@ table#contracts.table.table-condensed.table-hover.dataTable
 
   tbody
     each contract in contracts
-      tr(class=contract.is_valid ? contract.delta > 0 ? 'success' : undefined : 'danger')
-        td
-          button.btn.btn-xs.btn-primary(type="button", onclick="CCPEVE.showContract(#{contract.startStation.solarSystemID}, #{contract.contractID})")= contract.contractID
-        td
-          if contract.forCorp
-            = contract.issuerCorpName
-            span.badge.pull-right Corp
-          else
-            = contract.issuerName
+      if contract.startStation
+        tr(class=contract.is_valid ? contract.delta > 0 ? 'success' : undefined : 'danger')
+          td
+            button.btn.btn-xs.btn-primary(type="button", onclick="CCPEVE.showContract(#{contract.startStation.solarSystemID}, #{contract.contractID})")= contract.contractID
+          td
+            if contract.forCorp
+              = contract.issuerCorpName.substring(0, 25)
+              span.badge.pull-right Corp
+            else
+              = contract.issuerName.substring(0, 25)
 
-          if contract.note
-            span.badge.pull-right= contract.note
-        td= contract.status.replace("InProgress", "In Progress")
-        td
-          if contract.startStation
-            = contract.startStation.stationName.split(' ',1)
-          else
-            = contract.startStationID
-        td
-          if contract.endStation
-            = contract.endStation.stationName.split(' ',1)
-          else
-            = contract.endStationID
-        td
-          = accounting.toFixed(contract.volume, 2)
-          |  m
-          sup 3
-        td= accounting.formatNumber(contract.reward)
-        td= accounting.formatNumber(contract.delta)
-        td= moment(String(contract.dateIssued)).format("YYYY-MM-DD HH:mm:ss")
+            if contract.note
+              span.badge.pull-right= contract.note
+          td= contract.status.replace("InProgress", "In Progress")
+          td
+            if contract.startStation
+              = contract.startStation.stationName.split(' ',1)
+            else
+              = contract.startStationID
+          td
+            if contract.endStation
+              = contract.endStation.stationName.split(' ',1)
+            else
+              = contract.endStationID
+          td
+            = accounting.toFixed(contract.volume, 2)
+            |  m
+            sup 3
+          td= accounting.formatNumber(contract.reward)
+          td= accounting.formatNumber(contract.delta)
+          td= moment(String(contract.dateIssued)).format("YYYY-MM-DD")
