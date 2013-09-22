@@ -41,4 +41,4 @@ table#contracts.table.table-condensed.table-hover.dataTable
           td.values= accounting.toFixed(contract.volume, 2)
           td.values= accounting.formatNumber(contract.reward)
           td.values= accounting.formatNumber(contract.delta)
-          td.values= moment(String(contract.dateIssued)).format("YYYY-MM-DD")
+          td.values= moment(String(contract.dateIssued)).format("YYYY-MM-DD HH:mm")
