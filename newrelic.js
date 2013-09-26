@@ -5,5 +5,3 @@ exports.config = {
     level : 'trace'
   }
 };
-
-
