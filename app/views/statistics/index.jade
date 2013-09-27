@@ -16,11 +16,12 @@ block content
             th.pending-volume Pending Volume
         tbody
           each contract in outbound
-            tr.success
-              td= contract.startStationName
-              td.pending-volume= accounting.formatNumber(contract.volume, 0)
-                |  m
-                sup 3
+            - if ( contract.startStation )
+              tr.success
+                td= contract.startStation.stationName
+                td.pending-volume= accounting.formatNumber(contract.volume, 0)
+                  |  m
+                  sup 3
 
     .col-md-8.col-md-offset-2
       h1 Inbound Status
@@ -31,10 +32,11 @@ block content
             th.pending-volume Pending Volume
         tbody
           each contract in inbound
-            tr.warning
-              td= contract.endStationName
-              td.pending-volume= accounting.formatNumber(contract.volume, 0)
-                |  m
-                sup 3
+            - if ( contract.endStation )
+              tr.warning
+                td= contract.endStation.stationName
+                td.pending-volume= accounting.formatNumber(contract.volume, 0)
+                  |  m
+                  sup 3
 
 
