@@ -9,8 +9,8 @@ table#routes.table.table-hover
   tbody
     each route in routes
       tr
-        td= route.startStation.stationName
-        td= route.endStation.stationName
+        td= route.startStationName
+        td= route.endStationName
         td
           = route.rate
           | isk @ m

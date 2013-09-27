@@ -56,7 +56,7 @@ module.exports = function(grunt) {
 
     eveapi.setParams({keyID: process.env.EVE_KEYID, vCode: process.env.EVE_VCODE });
 
-    grunt.log.write('-----> Fetching Contracts\n');
+    grunt.log.write('-----> Fetching Unset Issuers\n');
     async.waterfall([
       function(callback) {
         Contract.find({$or: [{issuerName: null}, {issuerCorpName: null}]}, {"_id": 1, "issuerID": 1, "issuerName": 1, "issuerCorpID": 1, "issuerCorpName": 1, "forCorp": 1}, callback);

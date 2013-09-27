@@ -11,5 +11,8 @@ module.exports = function(grunt) {
   });
 
   grunt.loadTasks('tasks');
-  grunt.registerTask('default', ['fetch_contracts', 'update_issuers', 'update_stations', 'validate_contracts']);
+  grunt.registerTask('contracts', ['fetch_contracts', 'update_issuers', 'update_stations', 'validate_contracts']);
+  grunt.registerTask('stations', ['update_outposts']);
+
+  grunt.registerTask('default', ['contracts']);
 };

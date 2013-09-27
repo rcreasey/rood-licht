@@ -17,7 +17,7 @@ block content
         tbody
           each contract in outbound
             tr.success
-              td= contract.startStation.stationName
+              td= contract.startStationName
               td.pending-volume= accounting.formatNumber(contract.volume, 0)
                 |  m
                 sup 3
@@ -32,7 +32,7 @@ block content
         tbody
           each contract in inbound
             tr.warning
-              td= contract.endStation.stationName
+              td= contract.endStationName
               td.pending-volume= accounting.formatNumber(contract.volume, 0)
                 |  m
                 sup 3

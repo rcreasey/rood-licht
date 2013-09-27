@@ -31,4 +31,13 @@ var Contract = Schema({
   note: String
 });
 
+Contract.virtual('startStationName').get(function () {
+  return this.startStation === null ? this.startStation : this.startStation.stationName
+});
+
+Contract.virtual('endStationName').get(function () {
+  return this.endStation === null ? this.endStation : this.endStation.stationName
+});
+
+
 module.exports = mongoose.model('Contract', Contract);

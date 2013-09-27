@@ -1,13 +1,14 @@
-tr
-  td
-    strong  
-      = route.startStation.stationName.split(' ',1)
-      | 
-      span.glyphicon.glyphicon-resize-horizontal 
-      | 
-      = route.endStation.stationName.split(' ',1)
+- if (route.startStation !== null)
+  tr
+    td
+      strong
+        = route.startStationNameShort
+        | 
+        span.glyphicon.glyphicon-resize-horizontal 
+        | 
+        = route.endStationNameShort
 
-  td.rates 
-    = accounting.formatNumber(route.rate, 0)
-    | isk @ m
-    sup 3
+    td.rates 
+      = accounting.formatNumber(route.rate, 0)
+      | isk @ m
+      sup 3
