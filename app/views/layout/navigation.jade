@@ -5,16 +5,16 @@
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(href='#') Rood Licht Handel BV
+      a.navbar-brand(href='/') Rood Licht Handel BV
     .navbar-collapse.collapse
       ul.nav.navbar-nav
         li(class=title.match(/^Pricing$/g)?'active':undefined)
-          a(href='/') Pricing
-        li(class=title.match(/^Contracts/g)?'active':undefined)
-          a(href='/contracts') Contracts
-        li(class=title.match(/^Statistics/g)?'active':undefined)
-          a(href='/statistics') Statistics
-        if user
+          a(href='/pricing') Pricing
+      if user
+          li(class=title.match(/^Contracts/g)?'active':undefined)
+            a(href='/contracts') Contracts
+          li(class=title.match(/^Statistics/g)?'active':undefined)
+            a(href='/statistics') Statistics
           li(class=title.match(/^Routes/g)?'active':undefined)
             a(href='/routes') Routes
           li(class=title.match(/^Users/g)?'active':undefined)

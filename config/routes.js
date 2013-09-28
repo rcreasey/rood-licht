@@ -32,5 +32,6 @@ module.exports = function routes() {
   this.post('register', login.ensureLoggedOut('/logout'), users.create);
   this.get('logout', users.logout);
 
+  this.get('pricing', root.index);
   this.root(root.index);
 };
