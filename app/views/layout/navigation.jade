@@ -10,15 +10,15 @@
       ul.nav.navbar-nav
         li(class=title.match(/^Pricing$/g)?'active':undefined)
           a(href='/pricing') Pricing
-      if user
-          li(class=title.match(/^Contracts/g)?'active':undefined)
-            a(href='/contracts') Contracts
-          li(class=title.match(/^Statistics/g)?'active':undefined)
-            a(href='/statistics') Statistics
-          li(class=title.match(/^Routes/g)?'active':undefined)
-            a(href='/routes') Routes
-          li(class=title.match(/^Users/g)?'active':undefined)
-            a(href='/users') Users
+        if user
+            li(class=title.match(/^Contracts/g)?'active':undefined)
+              a(href='/contracts') Contracts
+            li(class=title.match(/^Statistics/g)?'active':undefined)
+              a(href='/statistics') Statistics
+            li(class=title.match(/^Routes/g)?'active':undefined)
+              a(href='/routes') Routes
+            li(class=title.match(/^Users/g)?'active':undefined)
+              a(href='/users') Users
       ul.nav.navbar-nav.navbar-right
         li
           if user
