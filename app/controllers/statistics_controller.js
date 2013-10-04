@@ -77,24 +77,38 @@ Number.prototype.mod = function(n) {
   return ((this%n)+n)%n;
 };
 
+var pad_date_array = function(start, frequency) {
+    var f = frequency || 'day'
+    var s = start
+    var e = moment()._d;
+    var a = [];
+    
+    while(s < e) {
+        a.push(s);
+        s = new Date(s.setDate(
+            s.getDate() + 1
+        ))
+    }
+    
+    return a;
+};
+
 var graph_constraints = function(duration) {
   var start, match, format_data;
 
   switch(duration) {
     case 'daily':
-      start = moment().subtract('week', 1)._d;
+      start = moment().subtract('week', 2)._d;
       match = {year: "$_id.year", month: "$_id.month", day: "$_id.day"};
       format_data = function(contracts) {
         var labels = new Array;
         var data   = new Array;
-        var period_length = 14;
-        var period_end   = moment()._d.getDate();
-        var period_start = period_end - period_length;
+        var date_array = pad_date_array(start, 'day');
 
-        for ( var index = period_start; index <= period_end; index++ ){
-          var date = moment().subtract('day', period_end - index);
-          var contract = _.find(contracts, function(c) { return c._id.day == index; })  || 
-                               {_id: {year: date.year(), month: date.month() + 1, day: date._d.getDate()}, value: 0};
+        for (id in date_array) {
+          var d = date_array[id];
+          var contract = _.find(contracts, function(c) { return c._id.day == d.getDate() }) ||
+                                                       { _id: {year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate()}, value: 0};
 
           labels.push( String( contract._id.month + '/' + contract._id.day ) );
           data.push( parseInt( contract.value ) );
