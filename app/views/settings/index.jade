@@ -1,0 +1,26 @@
+extends ../layout/default
+
+block content
+
+  .row
+    .col-lg-8.col-lg-offset-2
+      h1 Settings
+
+      ul#settings_nav.nav.nav-tabs
+        li.active
+          a(href='#contract_details', data-toggle='tab') Contract Details
+        li
+          a(href='#prices_layout', data-toggle='tab') Pricing Layout
+
+      form.form-horizontal(action='/settings', method='POST')
+        #settings_forms.tab-content
+
+          #contract_details.tab-pane.fade.active.in
+            include _contract_details
+
+          #prices_layout.tab-pane.fade
+            include _pricing_layout
+
+        .form-group
+          .col-sm-offset-2.col-lg-10
+            button.btn.btn-primary(type='submit') Save Settings

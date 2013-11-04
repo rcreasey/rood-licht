@@ -1,12 +1,16 @@
 var passport = require('passport')  
   , login = require('connect-ensure-login')
   , root = require('../app/controllers/root_controller')
+  , settings = require('../app/controllers/settings_controller')
   , contracts = require('../app/controllers/contracts_controller')
   , statistics = require('../app/controllers/statistics_controller')
   , users = require('../app/controllers/users_controller')
   , shipping_routes = require('../app/controllers/routes_controller')
 
 module.exports = function routes() {
+  this.get('settings/?', login.ensureLoggedIn('/login'), settings.index);
+  this.post('settings', login.ensureLoggedIn('/login'), settings.update);
+
   this.get('routes/?', login.ensureLoggedIn('/login'), shipping_routes.index);
   this.get('routes/new/?', login.ensureLoggedIn('/login'), shipping_routes.new);
   this.post('routes', login.ensureLoggedIn('/login'), shipping_routes.create);
