@@ -3,6 +3,6 @@ exports.config = {
   license_key : process.env.NEW_RELIC_LICENSE_KEY,
   agent_enabled : 'true',
   logging : {
-    level : 'debug'
+    level : 'info'
   }
 };
