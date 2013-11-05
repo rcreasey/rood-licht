@@ -1,25 +1,26 @@
 h3 Contract Details
+
 .form-group
   label.col-lg-2.control-label(for='issued_to') Issued To
   .col-lg-10
-    input#issued_to.form-control.col-lg-10(type='text', name='keys[issued_to]', placeholder="Contract recipient")= settings.issued_to
+    input#issued_to.form-control.col-lg-10(type='text', name='keys[issued_to]', placeholder="Contract recipient", value=settings.issued_to)
 
 .form-group
   label.col-lg-2.control-label(for='expiration') Expiration
   .col-lg-10.input-group
-    input#expiration.form-control.col-lg-10(type='text', name='keys[expiration]', placeholder="Expiration in days")= settings.expiration
+    input#expiration.form-control.col-lg-10(type='text', name='keys[expiration]', placeholder="Expiration in days", value=settings.expiration)
     span.input-group-addon days
 
 .form-group
   label.col-lg-2.control-label(for='days_to_complete') To Complete
   .col-lg-10.input-group
-    input#days_to_complete.form-control.col-lg-10(type='text', name='keys[days_to_complete]', placeholder="Days to complete")= settings.days_to_complete
+    input#days_to_complete.form-control.col-lg-10(type='text', name='keys[to_complete]', placeholder="Days to complete", value=settings.to_complete)
     span.input-group-addon days
 
 .form-group
   label.col-lg-2.control-label(for='max_volume') Max Volume
   .col-lg-10.input-group
-    input#max_volume.form-control.col-lg-10(type='text', name='keys[max_volume]', placeholder="Maximum size of individual packages")= settings.max_volume
+    input#max_volume.form-control.col-lg-10(type='text', name='keys[max_volume]', placeholder="Maximum size of individual packages", value=settings.max_volume)
     span.input-group-addon
       | m
       sup 3
@@ -28,10 +29,10 @@ h3 Contract Details
   label.col-lg-2.control-label(for='collateral') Collateral
   .col-lg-10.input-group
     span.input-group-addon $
-    input#collateral.form-control.col-lg-10(type='text', name='keys[collateral]', placeholder="Collateral")= settings.collateral
+    input#collateral.form-control.col-lg-10(type='text', name='keys[collateral]', placeholder="Collateral", value=settings.collateral)
 
  .form-group
   label.col-lg-2.control-label(for='minimum') Minimum
   .col-lg-10.input-group
     span.input-group-addon $
-    input#minimum.form-control.col-lg-10(type='text', name='keys[minimum]', placeholder="Minimum reward")= settings.minimum
+    input#minimum.form-control.col-lg-10(type='text', name='keys[minimum]', placeholder="Minimum reward", value=settings.minimum)
