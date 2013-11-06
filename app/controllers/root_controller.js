@@ -15,11 +15,16 @@ RootController.index = function(req, res) {
     }
   ], function(settings) {
     Route.find({}).populate('startStation endStation').sort('rate startStation.stationName').exec(function(err, routes) {
-      template = liquid.Template.parse(settings.contract_details)
-      pricing_layout = template.render( settings )
-      pricing_layout.done(function(pricing) {
-        res.render('root/index', {title: 'Pricing', user: req.user, pricing_layout: pricing, routes: routes})
-      });
+      try {
+
+        template = liquid.Template.parse(settings.contract_details)
+        pricing_layout = template.render( settings )
+        pricing_layout.done(function(pricing) {
+          res.render('root/index', {title: 'Pricing', user: req.user, pricing_layout: pricing, routes: routes})
+        });
+      } catch(err) {
+        res.render('root/index', {title: 'Pricing', user: req.user, pricing_layout: '', routes: routes})
+      }
     })
   });
 };
