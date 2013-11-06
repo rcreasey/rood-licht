@@ -1,5 +1,5 @@
 if(process.env.NODETIME_ACCOUNT_KEY) {
-  require('nodetime').profile({accountKey: process.env.NODETIME_ACCOUNT_KEY, appName: 'Rood Licht Handel BV'});
+  require('nodetime').profile({accountKey: process.env.NODETIME_ACCOUNT_KEY, appName: process.env.APP_NAME});
 }
 
 module.exports = function() {

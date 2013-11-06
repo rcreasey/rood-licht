@@ -2,36 +2,15 @@ extends ../layout/default
 
 block content
   .jumbotron
-      h1 Rood Licht Handel BV
+      h1= process.env.APP_NAME
       p Because monopolies suck.
 
   .container
     .row
       .col-md-4
         h2 Contract Details
-        .alert.alert-info
-          p This service is open to everyone blue to GSF!
-        ul
-          li 
-            | Contract your items in a courier contract to the corp 
-            strong Rood Licht Handel BV
-          li 
-            | Set "Expiration" to 
-            strong 7 days 
-            | and "Days to Complete" to 
-            strong 7 days.
-          li 
-            | Maximum size of individual packages no greater than 
-            strong 367,000 m3.
-          li 
-            | Set the collateral to 
-            strong 0.
-          li Set price according to Route Rates.
-          li 
-            strong 1,000,000 Isk Minimum 
-            | on each contract.
-          li No maximum value on packages.
-        p Contracts from neutral alts from Jita are not a problem. Contracts from neutral alts from Nullsec to Jita is a no-go.
+
+        != pricing_layout
 
       .col-md-4
         h2 Route Rates

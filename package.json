@@ -31,6 +31,7 @@
     "hamster": "git://github.com/kuja/hamster.git",
     "jade": "0.30.x",
     "less-middleware": "0.1.x",
+    "liquid-node": "0.1.x",
     "locomotive": "0.3.x",
     "locomotive-mongoose": "0.1.x",
     "moment": "2.1.x",
