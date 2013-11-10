@@ -9,7 +9,7 @@ var Contract = require(root + '/app/models/contract')
   , Station = require(root + '/app/models/station')
   , Route    = require(root + '/app/models/route')
 
-// mongoose.set('debug', true)
+mongoose.set('debug', true)
 
 'use strict';
 
