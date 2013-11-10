@@ -42,3 +42,18 @@ table#contracts.table.table-condensed.table-hover.dataTable
           td.values= accounting.formatNumber(contract.reward)
           td.values= accounting.formatNumber(contract.delta)
           td.values= moment(String(contract.dateIssued)).format("YYYY-MM-DD HH:mm")
+
+if filter.match(/^completed$/g)
+  :coffeescript
+    $(document).ready ->
+      contract_table = $("#contracts").dataTable(
+        sDom: "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>"
+        sPaginationType: "bootstrap"
+      )
+      contract_table.fnSort [[0, "desc"]]
+
+else
+  :coffeescript
+    $(document).ready ->
+      contract_table = $("#contracts").dataTable()
+      contract_table.fnSort [[0, "desc"]]

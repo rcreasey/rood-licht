@@ -1,7 +1,9 @@
 $.extend(true, $.fn.dataTable.defaults, {
-  sDom: "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
-  sPaginationType: "bootstrap",
+  sDom: "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i>>",
   iDisplayLength: 25,
+  aoColumns: [
+    null, null, null, null, null, {sType: "formatted-num"}, {sType: "formatted-num"}, {sType: "formatted-num"}, {sType: "formatted-num"}
+  ],
   oLanguage: {
     sLengthMenu: "_MENU_ records per page"
   }
@@ -111,15 +113,5 @@ $.extend(jQuery.fn.dataTableExt.oSort, {
   "formatted-num-desc": function(a, b) {
     return b - a;
   }
-});
-
-$(document).ready(function() {
-  var oTable;
-  oTable = $("#contracts").dataTable({
-    aoColumns: [
-      null, null, null, null, null, {sType: "formatted-num"}, {sType: "formatted-num"}, {sType: "formatted-num"}, {sType: "formatted-num"}
-    ]
-  });
-  return oTable.fnSort([[0, "desc"]]);
 });
 
